@@ -23,6 +23,8 @@ def get_top_tracks(token,artist,market):
     response = requests.get(query, headers = header)
     print(artist.title())
     print('mercado: {}'.format(market))
+    track_position = 1
     for t in response.json()['tracks']:
         #print('faixa: {} / album: {} / popularidade {}'.format(t['name'],t['album']['name'],t['popularity']))
-        print('{} - {}'.format(t['name'],t['album']['name']))
+        print('{} - {} - {}'.format(track_position, t['name'],t['album']['name']))
+        track_position += 1
