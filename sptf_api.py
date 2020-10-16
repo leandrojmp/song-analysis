@@ -6,9 +6,9 @@ from base64 import b64encode
 # custom functions
 import config
 
-def get_artist_id(token,artist,market):
+def get_artist_id(token,artist, market):
     artist = artist.replace(" ","%20")
-    query = config.endpoints['search'] + 'q=' + artist + "&type=artist&market=" + market
+    query = config.endpoints['search'] + 'q=' + artist + "&type=artist"
     header = config.endpoints['header']
     header['Authorization'] = "Bearer " + token
     response = requests.get(query, headers = header)
@@ -17,7 +17,7 @@ def get_artist_id(token,artist,market):
 
 def get_top_tracks(token,artist,market):
     artist_id = get_artist_id(token,artist,market)
-    query = config.endpoints['topTracks'].replace("ARTIST_ID",artist_id) + 'country=' + market
+    query = config.endpoints['topTracks'].replace("ARTIST_ID", artist_id) + 'country=' + market
     header = config.endpoints['header']
     header['Authorization'] = "Bearer " + token
     response = requests.get(query, headers = header)
@@ -28,3 +28,12 @@ def get_top_tracks(token,artist,market):
         #print('faixa: {} / album: {} / popularidade {}'.format(t['name'],t['album']['name'],t['popularity']))
         print('{} - {} - {}'.format(track_position, t['name'],t['album']['name']))
         track_position += 1
+
+def get_artists_albums(token, artist, market):
+    artist_id = get_artist_id(token,artist,market)
+    query = config.endpoints['artistAlbums'].replace("ARTIST_ID", artist_id) + "include_groups=album&limit=50" + "&country=" + market
+    header = config.endpoints['header']
+    header['Authorization'] = "Bearer " + token
+    response = requests.get(query, headers = header)
+    for a in response.json()['items']:
+        print('{} - {} - {} - {}'.format(a['artists'][0]['name'], a['name'], a['total_tracks'], a['release_date'] ))

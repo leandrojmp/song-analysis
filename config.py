@@ -12,6 +12,7 @@ endpoints = {
     "search": "	https://api.spotify.com/v1/search?",
     "newReleases": "https://api.spotify.com/v1/browse/new-releases?",
     "topTracks": "https://api.spotify.com/v1/artists/ARTIST_ID/top-tracks?",
+    "artistAlbums": "https://api.spotify.com/v1/artists/ARTIST_ID/albums?" ,
     "header": {
         "Accept": "application/json",
         "Content-Type": "application/json"
